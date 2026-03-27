@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zenith Tutorial — Fee Management System</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+
+<div id="main-app" class="page active">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+          <path d="M12 2L2 7v5c0 5.55 4.48 10.74 10 12 5.52-1.26 10-6.45 10-12V7l-10-5z"/>
+        </svg>
+      </div>
+      <div class="sidebar-school">
+        <div class="sidebar-school-name">Zenith</div>
+        <div class="sidebar-system-name">Fee Manager Pro</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+
+      <button class="nav-item active" onclick="navigateTo('dashboard', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        Dashboard
+      </button>
+
+      <button class="nav-item" onclick="navigateTo('add-student', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          <line x1="12" y1="14" x2="12" y2="20"/><line x1="9" y1="17" x2="15" y2="17"/>
+        </svg>
+        Add Student
+      </button>
+
+      <button class="nav-item" onclick="navigateTo('records', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/>
+        </svg>
+        Student Records
+      </button>
+
+      <button class="nav-item" onclick="navigateTo('payments', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+          <line x1="1" y1="10" x2="23" y2="10"/>
+        </svg>
+        Payments
+      </button>
+
+      <div class="nav-section-label">Access</div>
+
+      <button class="nav-item" onclick="navigateTo('vip', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+        VIP / Cleared
+      </button>
+
+      <button class="nav-item" onclick="navigateTo('settings', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+        </svg>
+        Settings
+      </button>
+
+      <button class="nav-item danger" onclick="handleLogout()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+          <polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        Sign Out
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="user-avatar">AD</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebar-admin-name">Admin</div>
+          <div class="sidebar-user-role">System Administrator</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="page-title" id="topbar-title">Dashboard Overview</div>
+        <div class="breadcrumb" id="topbar-breadcrumb">Home / Dashboard</div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-date">
+          <div class="topbar-date-day" id="topbar-day">Friday</div>
+          <div class="topbar-date-full" id="topbar-date">Mar 27, 2026</div>
+        </div>
+        <div class="topbar-divider"></div>
+        <div class="topbar-avatar" title="Admin Profile">AD</div>
+      </div>
+    </header>
+
+    <!-- CONTENT AREA -->
+    <div class="content-area">
+
+      <!-- ── DASHBOARD ── -->
+      <section id="section-dashboard" class="section active">
+        <div class="stats-grid">
+          <div class="stat-card blue">
+            <div class="stat-label">Total Students</div>
+            <div class="stat-value" id="stat-total">—</div>
+            <div class="stat-sub">Registered this session</div>
+            <div class="stat-icon blue">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-label">Fully Paid</div>
+            <div class="stat-value" id="stat-paid">—</div>
+            <div class="stat-sub">Clearance issued</div>
+            <div class="stat-icon green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-card red">
+            <div class="stat-label">Outstanding</div>
+            <div class="stat-value" id="stat-outstanding">—</div>
+            <div class="stat-sub">Awaiting payment</div>
+            <div class="stat-icon red">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-card gold">
+            <div class="stat-label">Revenue Collected</div>
+            <div class="stat-value" id="stat-revenue">—</div>
+            <div class="stat-sub">Total received</div>
+            <div class="stat-icon gold">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-card red">
+            <div class="stat-label">Total Owed</div>
+            <div class="stat-value" id="stat-owed">—</div>
+            <div class="stat-sub">Pending collection</div>
+            <div class="stat-icon red">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Recent Payments -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Recent Payment Activity</div>
+                <div class="card-subtitle">Latest 5 transactions</div>
+              </div>
+              <span class="badge badge-navy">Live</span>
+            </div>
+            <div class="card-body">
+              <div class="activity-list">
+                <div style="text-align:center;color:var(--gray-400);padding:20px">Loading...</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Summary Panel -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Collection Summary</div>
+            </div>
+            <div class="card-body">
+              <div class="progress-wrap" style="margin-bottom:22px">
+                <div class="progress-label-row">
+                  <span>Payment Completion Rate</span>
+                  <span style="color:var(--success);font-weight:600">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-bar-fill" style="width:0%"></div>
+                </div>
+              </div>
+              <div style="margin-top:20px">
+                <button class="btn-gold" style="width:100%" onclick="navigateTo('records', document.querySelectorAll('.nav-item')[2])">
+                  View All Records
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── ADD STUDENT ── -->
+      <section id="section-add-student" class="section">
+        <div class="form-card">
+          <div class="form-section-title">Student Profile Photo</div>
+          <div class="photo-upload-section">
+            <div class="photo-preview" id="photo-preview-circle">
+              <div class="photo-preview-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>No photo</span>
+              </div>
+            </div>
+            <div class="photo-upload-info">
+              <div class="photo-upload-title">Upload Profile Picture</div>
+              <div class="photo-upload-sub">PNG, JPG up to 2MB. Stored securely in Supabase Storage.</div>
+              <input type="file" id="photo-file-input" accept="image/*" style="display:none" onchange="previewPhoto(this)">
+              <button class="btn-secondary" onclick="document.getElementById('photo-file-input').click()">Choose Photo</button>
+            </div>
+          </div>
+
+          <div class="form-section-title">Student Information</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Full Name *</label>
+              <input type="text" class="form-input-styled" id="student-name" placeholder="e.g. Adaeze Chukwu" oninput="updateFormCalcs()">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Student ID</label>
+              <input type="text" class="form-input-styled" id="student-id" value="Auto-generated" disabled>
+              <div class="form-hint">Assigned automatically on save.</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Class / Grade *</label>
+              <select class="form-input-styled" id="student-class">
+                <option value="">Select class...</option>
+                <optgroup label="Primary">
+                  <option>Primary 1</option><option>Primary 2</option><option>Primary 3</option>
+                  <option>Primary 4</option><option>Primary 5</option><option>Primary 6</option>
+                </optgroup>
+                <optgroup label="Junior Secondary">
+                  <option>JSS1A</option><option>JSS1B</option><option>JSS2A</option>
+                  <option>JSS2B</option><option>JSS3A</option><option>JSS3B</option>
+                </optgroup>
+                <optgroup label="Senior Secondary">
+                  <option>SS1A</option><option>SS1B</option><option>SS2A</option>
+                  <option>SS2B</option><option>SS3A</option><option>SS3B</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Date of Enrollment</label>
+              <input type="date" class="form-input-styled" id="student-enroll-date">
+            </div>
+          </div>
+
+          <div class="form-section-title">Fee & Payment Details</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Total Required Fee (₦) *</label>
+              <input type="number" class="form-input-styled" id="total-fee" placeholder="0.00" oninput="updateFormCalcs()">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Amount Paid (₦) *</label>
+              <input type="number" class="form-input-styled" id="amount-paid" placeholder="0.00" oninput="updateFormCalcs()">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Outstanding Balance (₦)</label>
+              <input type="text" class="form-input-styled calc-field" id="balance-display" value="₦0.00" disabled>
+              <div class="form-hint">Auto-calculated.</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Date of First Payment *</label>
+              <input type="date" class="form-input-styled" id="first-payment-date">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Payment Method *</label>
+              <select class="form-input-styled" id="payment-method">
+                <option value="">Select method...</option>
+                <option value="Cash">Cash</option>
+                <option value="Transfer">Bank Transfer</option>
+                <option value="POS">POS Terminal</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Clearance Serial Number</label>
+              <div class="serial-preview" id="serial-preview-field">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/>
+                  <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                <span class="serial-pending" id="serial-display-value">Pending — Complete payment required</span>
+              </div>
+              <div class="form-hint">Generated automatically when fully paid.</div>
+            </div>
+          </div>
+
+          <div class="form-section-title">Additional Information</div>
+          <div class="form-grid">
+            <div class="form-group form-full">
+              <label class="form-label">Notes / Remarks</label>
+              <textarea class="form-input-styled" id="student-notes" placeholder="Any additional notes..."></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn-ghost" onclick="clearStudentForm()">Clear Form</button>
+            <button class="btn-gold" onclick="submitStudentForm()">Save Student Record</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── STUDENT RECORDS ── -->
+      <section id="section-records" class="section">
+        <div class="table-toolbar">
+          <div class="search-input-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" class="search-input" id="records-search" placeholder="Search by student name..." oninput="filterRecordsTable()">
+          </div>
+          <select class="filter-select" id="records-filter" onchange="filterRecordsTable()">
+            <option value="all">All Students</option>
+            <option value="paid">Fully Paid</option>
+            <option value="partial">Partial Payment</option>
+          </select>
+          <button class="btn-gold" onclick="navigateTo('add-student', document.querySelectorAll('.nav-item')[1])">
+            + Add Student
+          </button>
+        </div>
+
+        <div class="table-wrap">
+          <table id="records-table">
+            <thead>
+              <tr>
+                <th>Photo</th>
+                <th>Student Name</th>
+                <th>Class</th>
+                <th>Total Fee</th>
+                <th>Amount Paid</th>
+                <th>Balance</th>
+                <th>Serial No.</th>
+                <th>Status</th>
+                <th>Last Payment</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="records-tbody">
+              <tr><td colspan="10" style="text-align:center;padding:30px;color:var(--gray-400)">Loading students...</td></tr>
+            </tbody>
+          </table>
+          <div class="pagination">
+            <div class="pagination-info">Loading...</div>
+            <div class="pagination-controls">
+              <div class="page-btn active">1</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── PAYMENTS ── -->
+      <section id="section-payments" class="section">
+        <div class="card" style="max-width:800px">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Payment Transaction Log</div>
+              <div class="card-subtitle">Complete audit trail of all payments</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-group" style="margin-bottom:20px">
+              <label class="form-label">Select Student</label>
+              <select class="form-input-styled" id="payment-history-student">
+                <option value="">Select a student...</option>
+              </select>
+            </div>
+            <div class="payment-history-list">
+              <div style="text-align:center;color:var(--gray-400);padding:20px">Select a student to view their payment history.</div>
+            </div>
+            <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--gray-100);display:flex;justify-content:space-between;align-items:center">
+              <div style="font-size:0.82rem;color:var(--gray-400)">Total payments: — &nbsp;·&nbsp; Total collected: —</div>
+              <button class="btn-gold" onclick="openPaymentModal('current')">Record New Payment</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── VIP ── -->
+      <section id="section-vip" class="section">
+        <div class="vip-header">
+          <div class="vip-title">VIP Cleared Students</div>
+          <div class="vip-sub">Only students with full payment and active serial numbers appear here.</div>
+          <div class="vip-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+            Clearance Registry · 2026 Session
+          </div>
+        </div>
+
+        <div class="vip-search-section">
+          <div class="form-label" style="margin-bottom:8px">Search Cleared Students</div>
+          <div class="vip-search-row">
+            <div class="search-input-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+              <input type="text" class="search-input" id="vip-search" placeholder="Search by name or serial number..." oninput="filterVipCards()">
+            </div>
+            <button class="btn-navy" onclick="filterVipCards()">Search</button>
+          </div>
+        </div>
+
+        <div class="vip-cards-grid" id="vip-cards-grid">
+          <div style="text-align:center;color:var(--gray-400);padding:40px;grid-column:1/-1">Loading...</div>
+        </div>
+      </section>
+
+      <!-- ── SETTINGS ── -->
+      <section id="section-settings" class="section">
+        <div class="settings-grid">
+          <div class="settings-nav">
+            <div class="settings-nav-item active" onclick="showSettingsPanel('school', this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+              Tutorial Info
+            </div>
+            <div class="settings-nav-item" onclick="showSettingsPanel('admin', this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+              </svg>
+              Admin Account
+            </div>
+          </div>
+
+          <div class="settings-panel">
+            <div id="settings-school" class="settings-sub-panel">
+              <div class="settings-panel-title">Tutorial Information</div>
+              <div class="settings-panel-sub">Basic info displayed across the system.</div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Tutorial Name</label>
+                  <input type="text" class="form-input-styled" value="Zenith Tutorial">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Current Session</label>
+                  <input type="text" class="form-input-styled" value="2025/2026">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Contact Email</label>
+                  <input type="email" class="form-input-styled" value="admin@zenithtutorial.edu.ng">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Phone Number</label>
+                  <input type="text" class="form-input-styled" value="+234 800 000 0000">
+                </div>
+              </div>
+              <div class="form-actions" style="padding-top:18px;border-top:1px solid var(--gray-100);margin-top:20px">
+                <button class="btn-gold">Save Info</button>
+              </div>
+            </div>
+
+            <div id="settings-admin" class="settings-sub-panel hidden">
+              <div class="settings-panel-title">Admin Account</div>
+              <div class="settings-panel-sub">Update your login credentials.</div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">New Password</label>
+                  <input type="password" class="form-input-styled" id="new-password" placeholder="Enter new password">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Confirm Password</label>
+                  <input type="password" class="form-input-styled" id="confirm-password" placeholder="Confirm new password">
+                </div>
+              </div>
+              <div class="form-actions" style="padding-top:18px;border-top:1px solid var(--gray-100);margin-top:20px">
+                <button class="btn-gold" onclick="changePassword()">Update Password</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /content-area -->
+  </div><!-- /main-content -->
+</div><!-- /main-app -->
+
+<!-- MODALS -->
+<!-- EDIT MODAL -->
+<div class="modal-overlay" id="modal-edit">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Edit Student Record</div>
+      <button class="modal-close" onclick="closeModal('modal-edit')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input type="text" class="form-input-styled" id="edit-name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Class / Grade</label>
+        <select class="form-input-styled" id="edit-class"></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Total Required Fee (₦)</label>
+        <input type="number" class="form-input-styled" id="edit-total-fee" oninput="updateEditCalcs()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Amount Paid (₦)</label>
+        <input type="number" class="form-input-styled" id="edit-amount-paid" oninput="updateEditCalcs()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Current Balance (₦)</label>
+        <input type="text" class="form-input-styled calc-field" id="edit-balance" disabled>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes / Remarks</label>
+        <textarea class="form-input-styled" id="edit-notes"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modal-edit')">Cancel</button>
+      <button class="btn-gold" onclick="saveEditStudent()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div class="modal-overlay" id="modal-payment">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Record New Payment</div>
+      <button class="modal-close" onclick="closeModal('modal-payment')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div style="background:var(--off-white);border-radius:var(--radius);padding:14px 16px;margin-bottom:20px">
+        <div style="font-size:0.88rem;font-weight:700;color:var(--navy)">Student Name</div>
+        <div style="font-size:0.78rem;color:var(--gray-400);margin-top:2px">Class · Current Balance: <span style="color:var(--danger);font-weight:600">₦0</span></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Payment Amount (₦) *</label>
+        <input type="number" class="form-input-styled" id="new-payment-amount" placeholder="0.00" oninput="updatePaymentCalcs()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Payment Date *</label>
+        <input type="date" class="form-input-styled" id="new-payment-date">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Payment Method *</label>
+        <select class="form-input-styled" id="new-payment-method">
+          <option value="">Select...</option>
+          <option>Cash</option>
+          <option>Bank Transfer</option>
+          <option>POS Terminal</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Remaining Balance After Payment</label>
+        <input type="text" class="form-input-styled calc-field" id="new-payment-balance" disabled>
+      </div>
+      <div id="serial-gen-note" class="hidden" style="background:var(--success-bg);border:1px solid #b2dfcb;border-radius:var(--radius);padding:12px 16px;margin-top:4px">
+        <div style="font-size:0.82rem;color:var(--success);font-weight:600">✓ This payment completes the full fee. A serial number will be generated automatically.</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modal-payment')">Cancel</button>
+      <button class="btn-gold" onclick="saveNewPayment()">Confirm Payment</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal-overlay" id="modal-delete">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header">
+      <div class="modal-title" style="color:var(--danger)">Confirm Deletion</div>
+      <button class="modal-close" onclick="closeModal('modal-delete')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div style="text-align:center;padding:10px 0">
+        <div style="width:52px;height:52px;background:var(--danger-bg);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
+            <path d="M10 11v6M14 11v6M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/>
+          </svg>
+        </div>
+        <div style="font-size:0.95rem;font-weight:700;color:var(--gray-800);margin-bottom:8px">Delete Student Record?</div>
+        <div style="font-size:0.83rem;color:var(--gray-400);line-height:1.6">
+          This will permanently delete the student and all payment history. This cannot be undone.
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" style="justify-content:center;gap:16px">
+      <button class="btn-ghost" onclick="closeModal('modal-delete')">Cancel</button>
+      <button style="padding:10px 24px;background:var(--danger);color:white;border:none;border-radius:var(--radius);font-weight:600;cursor:pointer" onclick="executeDelete()">
+        Yes, Delete Record
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- REGEN SERIAL MODAL -->
+<div class="modal-overlay" id="modal-regen">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-header">
+      <div class="modal-title">Regenerate Serial Number</div>
+      <button class="modal-close" onclick="closeModal('modal-regen')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="security-note" style="border-left-color:var(--danger)">
+        <div class="security-note-title" style="color:var(--danger)">⚠ Warning: Irreversible Action</div>
+        <div class="security-note-text">
+          Serial number <strong id="regen-old-serial"></strong> will be permanently invalidated.
+          A new serial number will be generated and the old one will stop working.
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modal-regen')">Cancel</button>
+      <button class="btn-gold" onclick="executeRegenSerial()">Generate New Serial</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase.js"></script>
+<script src="./script.js"></script>
+
+</body>
+</html>
