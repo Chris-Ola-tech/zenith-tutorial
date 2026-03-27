@@ -6,10 +6,11 @@
 // ── AUTH GUARD: Redirect to login if not signed in ──────────
 (async function authGuard() {
   const { data: { session } } = await supabase.auth.getSession();
-  if (!session) {
-    window.location.href = './login.html';
-    return;
-  }
+if (!session) {
+  window.location.href = './login.html';
+  return;
+}
+document.getElementById('main-app').style.display = 'flex';
   // Show admin email in sidebar
   const email = session.user.email;
   const initials = email.substring(0, 2).toUpperCase();
