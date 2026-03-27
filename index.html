@@ -68,7 +68,7 @@
   (async function() {
     const { data: { session } } = await supabase.auth.getSession();
     if (session) {
-      window.location.href = './index.html';
+      window.location.href = './main.html';
     }
   })();
 
@@ -99,7 +99,7 @@
       btn.disabled = false;
     } else {
       // Login success — go to dashboard
-      window.location.href = './index.html';
+      window.location.href = './main.html';
     }
   });
 
