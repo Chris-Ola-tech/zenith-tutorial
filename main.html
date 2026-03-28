@@ -10,7 +10,10 @@
 <body>
  
 <div id="main-app" class="page" style="display:none">
- 
+
+  <!-- MOBILE SIDEBAR OVERLAY (tap to close) -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
@@ -103,6 +106,15 @@
  
     <!-- TOPBAR -->
     <header class="topbar">
+      <!-- HAMBURGER BUTTON (only visible on mobile) -->
+      <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="openSidebar()" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+
       <div class="topbar-left">
         <div class="page-title" id="topbar-title">Dashboard Overview</div>
         <div class="breadcrumb" id="topbar-breadcrumb">Home / Dashboard</div>
@@ -251,21 +263,28 @@
               <input type="text" class="form-input-styled" id="student-id" value="Auto-generated" disabled>
             </div>
             <div class="form-group">
-              <label class="form-label">Class / Grade *</label>
+              <label class="form-label">Course</label>
               <select class="form-input-styled" id="student-class">
-                <option value="">Select class...</option>
+                <option value="">Select course</option>
                 <optgroup label="Primary">
-                  <option>Primary 1</option><option>Primary 2</option><option>Primary 3</option>
-                  <option>Primary 4</option><option>Primary 5</option><option>Primary 6</option>
+                  <option>ANATOMY</option><option>CIVIL ENGIEERING</option><option>ANIMAL&ENVIRONMENTAL BIO</option>
+                  <option>HIM</option><option>ELECTRICAL/ELECTRONICS</option><option>PWES</option>
+                  <option>EHS</option><option>MECHANICAL ENGINEERING</option><option>LIS</option>
+                  <option>M.B.B.S</option><option>BIOCHEMISTRY</option><option>INDUSTRIAL MATHEMATICS</option>
+                  <option>NURSING</option><option>BIOTECHNOLOGY</option><option>QUANTITY SURVEY</option>
+                  <option>PHYSIOLOGY</option><option>CHEMISTRY</option><option>ARCHITECTURE</option>
+                  <option>PUBLIC HEALTH</option><option>COMPUTER SCIENCE</option><option>INFORMATION TECH</option>
+                  <option>MLS</option><option>CYBERSECURITY</option><option>BREWING SCIENCE AND TECH</option>
+                  <option>NUTRITION AND DCT</option><option>GEOLOGY</option><option>FAMILY AND CONSUMER SCIENCE</option>
+                  <option>RADIOGRAPHY</option><option>INDUSTRIAL CHEMISTRY</option><option>COMPUTER ENGINEERING</option>
+                  <option>PHARMACOLOGY</option><option>INFORMATION SYSTEM</option><option>software</option>
+                  <option>GEOGRAPHY</option><option>MATHEMATICS</option><option>MECHATRINICS ENGINEERING</option>
+                  <option>AGRIC ENGINEERING</option><option>MICBROBIOLOGY</option><option>DATA SCIENCE</option>
+                  <option>CHEMICAL ENGINEERING</option><option>PLANT BIOLOGY</option><option>BUILDING</option>
+                  <option>FOOD SCIENCE AND TECH</option><option>SCIENCE LABORATORY</option>
+                  <option>STATISTICS</option><option>SOFTWARE ENGINEERING</option>
                 </optgroup>
-                <optgroup label="Junior Secondary">
-                  <option>JSS1A</option><option>JSS1B</option><option>JSS2A</option>
-                  <option>JSS2B</option><option>JSS3A</option><option>JSS3B</option>
-                </optgroup>
-                <optgroup label="Senior Secondary">
-                  <option>SS1A</option><option>SS1B</option><option>SS2A</option>
-                  <option>SS2B</option><option>SS3A</option><option>SS3B</option>
-                </optgroup>
+                
               </select>
             </div>
             <div class="form-group">
@@ -655,4 +674,3 @@
  
 </body>
 </html>
- 

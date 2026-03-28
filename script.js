@@ -2,7 +2,23 @@
 //  ZENITH TUTORIAL — FEE MANAGEMENT SYSTEM
 //  script.js — Full Supabase Backend
 // ============================================================
- 
+ // ===========================
+// MOBILE SIDEBAR TOGGLE
+// ===========================
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebar-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden'; // prevent background scroll
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+
+
 // ── AUTH GUARD ───────────────────────────────────────────────
 (async function authGuard() {
   const { data: { session } } = await _supabase.auth.getSession();
@@ -35,6 +51,7 @@ const pageTitles = {
 };
  
 function navigateTo(sectionId, navEl) {
+  closeSidebar();
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.getElementById('section-' + sectionId)?.classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
