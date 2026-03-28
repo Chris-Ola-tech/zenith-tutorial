@@ -6,12 +6,11 @@
 <title>Zenith Tutorial — Fee Management System</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./style.css">
-<link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-
+ 
 <div id="main-app" class="page" style="display:none">
-
+ 
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
@@ -25,10 +24,10 @@
         <div class="sidebar-system-name">Fee Manager Pro</div>
       </div>
     </div>
-
+ 
     <nav class="sidebar-nav">
       <div class="nav-section-label">Main</div>
-
+ 
       <button class="nav-item active" onclick="navigateTo('dashboard', this)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
@@ -36,7 +35,7 @@
         </svg>
         Dashboard
       </button>
-
+ 
       <button class="nav-item" onclick="navigateTo('add-student', this)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
@@ -44,7 +43,7 @@
         </svg>
         Add Student
       </button>
-
+ 
       <button class="nav-item" onclick="navigateTo('records', this)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
@@ -53,7 +52,7 @@
         </svg>
         Student Records
       </button>
-
+ 
       <button class="nav-item" onclick="navigateTo('payments', this)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
@@ -61,16 +60,16 @@
         </svg>
         Payments
       </button>
-
+ 
       <div class="nav-section-label">Access</div>
-
+ 
       <button class="nav-item" onclick="navigateTo('vip', this)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
         </svg>
         VIP / Cleared
       </button>
-
+ 
       <button class="nav-item" onclick="navigateTo('settings', this)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="3"/>
@@ -78,7 +77,7 @@
         </svg>
         Settings
       </button>
-
+ 
       <button class="nav-item danger" onclick="handleLogout()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
@@ -87,7 +86,7 @@
         Sign Out
       </button>
     </nav>
-
+ 
     <div class="sidebar-footer">
       <div class="sidebar-user">
         <div class="user-avatar">AD</div>
@@ -98,10 +97,10 @@
       </div>
     </div>
   </aside>
-
+ 
   <!-- MAIN CONTENT -->
   <div class="main-content">
-
+ 
     <!-- TOPBAR -->
     <header class="topbar">
       <div class="topbar-left">
@@ -117,11 +116,11 @@
         <div class="topbar-avatar" title="Admin Profile">AD</div>
       </div>
     </header>
-
+ 
     <!-- CONTENT AREA -->
     <div class="content-area">
-
-      <!-- ── DASHBOARD ── -->
+ 
+      <!-- DASHBOARD -->
       <section id="section-dashboard" class="section active">
         <div class="stats-grid">
           <div class="stat-card blue">
@@ -179,9 +178,8 @@
             </div>
           </div>
         </div>
-
+ 
         <div class="dashboard-grid">
-          <!-- Recent Payments -->
           <div class="card">
             <div class="card-header">
               <div>
@@ -196,8 +194,7 @@
               </div>
             </div>
           </div>
-
-          <!-- Summary Panel -->
+ 
           <div class="card">
             <div class="card-header">
               <div class="card-title">Collection Summary</div>
@@ -221,8 +218,8 @@
           </div>
         </div>
       </section>
-
-      <!-- ── ADD STUDENT ── -->
+ 
+      <!-- ADD STUDENT -->
       <section id="section-add-student" class="section">
         <div class="form-card">
           <div class="form-section-title">Student Profile Photo</div>
@@ -237,12 +234,12 @@
             </div>
             <div class="photo-upload-info">
               <div class="photo-upload-title">Upload Profile Picture</div>
-              <div class="photo-upload-sub">PNG, JPG up to 2MB. Stored securely in Supabase Storage.</div>
+              <div class="photo-upload-sub">PNG, JPG up to 2MB.</div>
               <input type="file" id="photo-file-input" accept="image/*" style="display:none" onchange="previewPhoto(this)">
               <button class="btn-secondary" onclick="document.getElementById('photo-file-input').click()">Choose Photo</button>
             </div>
           </div>
-
+ 
           <div class="form-section-title">Student Information</div>
           <div class="form-grid">
             <div class="form-group">
@@ -252,7 +249,6 @@
             <div class="form-group">
               <label class="form-label">Student ID</label>
               <input type="text" class="form-input-styled" id="student-id" value="Auto-generated" disabled>
-              <div class="form-hint">Assigned automatically on save.</div>
             </div>
             <div class="form-group">
               <label class="form-label">Class / Grade *</label>
@@ -277,7 +273,7 @@
               <input type="date" class="form-input-styled" id="student-enroll-date">
             </div>
           </div>
-
+ 
           <div class="form-section-title">Fee & Payment Details</div>
           <div class="form-grid">
             <div class="form-group">
@@ -291,7 +287,6 @@
             <div class="form-group">
               <label class="form-label">Outstanding Balance (₦)</label>
               <input type="text" class="form-input-styled calc-field" id="balance-display" value="₦0.00" disabled>
-              <div class="form-hint">Auto-calculated.</div>
             </div>
             <div class="form-group">
               <label class="form-label">Date of First Payment *</label>
@@ -308,17 +303,16 @@
             </div>
             <div class="form-group">
               <label class="form-label">Clearance Serial Number</label>
-              <div class="serial-preview" id="serial-preview-field">
+              <div class="serial-preview">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/>
                   <line x1="12" y1="16" x2="12.01" y2="16"/>
                 </svg>
                 <span class="serial-pending" id="serial-display-value">Pending — Complete payment required</span>
               </div>
-              <div class="form-hint">Generated automatically when fully paid.</div>
             </div>
           </div>
-
+ 
           <div class="form-section-title">Additional Information</div>
           <div class="form-grid">
             <div class="form-group form-full">
@@ -326,15 +320,15 @@
               <textarea class="form-input-styled" id="student-notes" placeholder="Any additional notes..."></textarea>
             </div>
           </div>
-
+ 
           <div class="form-actions">
             <button class="btn-ghost" onclick="clearStudentForm()">Clear Form</button>
             <button class="btn-gold" onclick="submitStudentForm()">Save Student Record</button>
           </div>
         </div>
       </section>
-
-      <!-- ── STUDENT RECORDS ── -->
+ 
+      <!-- STUDENT RECORDS -->
       <section id="section-records" class="section">
         <div class="table-toolbar">
           <div class="search-input-wrap">
@@ -352,7 +346,7 @@
             + Add Student
           </button>
         </div>
-
+ 
         <div class="table-wrap">
           <table id="records-table">
             <thead>
@@ -381,8 +375,8 @@
           </div>
         </div>
       </section>
-
-      <!-- ── PAYMENTS ── -->
+ 
+      <!-- PAYMENTS -->
       <section id="section-payments" class="section">
         <div class="card" style="max-width:800px">
           <div class="card-header">
@@ -408,8 +402,8 @@
           </div>
         </div>
       </section>
-
-      <!-- ── VIP ── -->
+ 
+      <!-- VIP -->
       <section id="section-vip" class="section">
         <div class="vip-header">
           <div class="vip-title">VIP Cleared Students</div>
@@ -421,7 +415,6 @@
             Clearance Registry · 2026 Session
           </div>
         </div>
-
         <div class="vip-search-section">
           <div class="form-label" style="margin-bottom:8px">Search Cleared Students</div>
           <div class="vip-search-row">
@@ -434,13 +427,12 @@
             <button class="btn-navy" onclick="filterVipCards()">Search</button>
           </div>
         </div>
-
         <div class="vip-cards-grid" id="vip-cards-grid">
           <div style="text-align:center;color:var(--gray-400);padding:40px;grid-column:1/-1">Loading...</div>
         </div>
       </section>
-
-      <!-- ── SETTINGS ── -->
+ 
+      <!-- SETTINGS -->
       <section id="section-settings" class="section">
         <div class="settings-grid">
           <div class="settings-nav">
@@ -458,7 +450,6 @@
               Admin Account
             </div>
           </div>
-
           <div class="settings-panel">
             <div id="settings-school" class="settings-sub-panel">
               <div class="settings-panel-title">Tutorial Information</div>
@@ -472,20 +463,11 @@
                   <label class="form-label">Current Session</label>
                   <input type="text" class="form-input-styled" value="2025/2026">
                 </div>
-                <div class="form-group">
-                  <label class="form-label">Contact Email</label>
-                  <input type="email" class="form-input-styled" value="admin@zenithtutorial.edu.ng">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Phone Number</label>
-                  <input type="text" class="form-input-styled" value="+234 800 000 0000">
-                </div>
               </div>
               <div class="form-actions" style="padding-top:18px;border-top:1px solid var(--gray-100);margin-top:20px">
                 <button class="btn-gold">Save Info</button>
               </div>
             </div>
-
             <div id="settings-admin" class="settings-sub-panel hidden">
               <div class="settings-panel-title">Admin Account</div>
               <div class="settings-panel-sub">Update your login credentials.</div>
@@ -506,13 +488,12 @@
           </div>
         </div>
       </section>
-
-    </div><!-- /content-area -->
-  </div><!-- /main-content -->
-</div><!-- /main-app -->
-
+ 
+    </div>
+  </div>
+</div>
+ 
 <!-- MODALS -->
-<!-- EDIT MODAL -->
 <div class="modal-overlay" id="modal-edit">
   <div class="modal">
     <div class="modal-header">
@@ -555,8 +536,7 @@
     </div>
   </div>
 </div>
-
-<!-- PAYMENT MODAL -->
+ 
 <div class="modal-overlay" id="modal-payment">
   <div class="modal">
     <div class="modal-header">
@@ -603,8 +583,7 @@
     </div>
   </div>
 </div>
-
-<!-- DELETE MODAL -->
+ 
 <div class="modal-overlay" id="modal-delete">
   <div class="modal" style="max-width:420px">
     <div class="modal-header">
@@ -625,21 +604,16 @@
           </svg>
         </div>
         <div style="font-size:0.95rem;font-weight:700;color:var(--gray-800);margin-bottom:8px">Delete Student Record?</div>
-        <div style="font-size:0.83rem;color:var(--gray-400);line-height:1.6">
-          This will permanently delete the student and all payment history. This cannot be undone.
-        </div>
+        <div style="font-size:0.83rem;color:var(--gray-400);line-height:1.6">This will permanently delete the student and all payment history. This cannot be undone.</div>
       </div>
     </div>
     <div class="modal-footer" style="justify-content:center;gap:16px">
       <button class="btn-ghost" onclick="closeModal('modal-delete')">Cancel</button>
-      <button style="padding:10px 24px;background:var(--danger);color:white;border:none;border-radius:var(--radius);font-weight:600;cursor:pointer" onclick="executeDelete()">
-        Yes, Delete Record
-      </button>
+      <button style="padding:10px 24px;background:var(--danger);color:white;border:none;border-radius:var(--radius);font-weight:600;cursor:pointer" onclick="executeDelete()">Yes, Delete Record</button>
     </div>
   </div>
 </div>
-
-<!-- REGEN SERIAL MODAL -->
+ 
 <div class="modal-overlay" id="modal-regen">
   <div class="modal" style="max-width:440px">
     <div class="modal-header">
@@ -655,7 +629,6 @@
         <div class="security-note-title" style="color:var(--danger)">⚠ Warning: Irreversible Action</div>
         <div class="security-note-text">
           Serial number <strong id="regen-old-serial"></strong> will be permanently invalidated.
-          A new serial number will be generated and the old one will stop working.
         </div>
       </div>
     </div>
@@ -665,14 +638,21 @@
     </div>
   </div>
 </div>
-
-<!-- TOAST -->
+ 
 <div class="toast-container" id="toast-container"></div>
-
-<!-- Supabase SDK -->
+ 
+<!-- Supabase SDK — loaded once here -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./supabase.js"></script>
+<script>
+  // Initialize Supabase once
+  const { createClient } = supabase;
+  const _supabase = createClient(
+    'https://dzcmvgngpfwoueehowub.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6Y212Z25ncGZ3b3VlZWhvd3ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2NDMzOTUsImV4cCI6MjA5MDIxOTM5NX0.ouKaKTLSQOhrHq_9R1RDXD3dvnURtSk8xB4WdXAOn78'
+  );
+</script>
 <script src="./script.js"></script>
-
+ 
 </body>
 </html>
+ 

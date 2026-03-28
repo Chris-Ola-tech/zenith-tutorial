@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-
+ 
 <div id="login-page" class="page active">
   <div class="login-card">
     <div class="login-logo">
@@ -21,14 +21,14 @@
       <div class="logo-school-name">Zenith Tutorial</div>
       <div class="logo-tagline">Fee Record Management System</div>
     </div>
-
+ 
     <div class="login-title">Administrator Sign In</div>
     <div class="login-subtitle">Access is restricted to authorized personnel only.</div>
-
+ 
     <div id="login-error" class="error-msg hidden">
       Invalid email or password. Please try again.
     </div>
-
+ 
     <div class="form-group">
       <label class="form-label">Email Address</label>
       <div class="input-with-icon">
@@ -39,7 +39,7 @@
         <input type="email" class="form-input" id="login-email" placeholder="admin@tutorial.edu" autocomplete="email">
       </div>
     </div>
-
+ 
     <div class="form-group">
       <label class="form-label">Password</label>
       <div class="input-with-icon">
@@ -50,63 +50,69 @@
         <input type="password" class="form-input" id="login-password" placeholder="••••••••" autocomplete="current-password">
       </div>
     </div>
-
+ 
     <button class="btn-primary" id="login-btn">Sign In to Dashboard</button>
-
+ 
     <div class="login-footer">
       EduLedger v2.1 &nbsp;·&nbsp; Secured by Supabase<br>
       &copy; 2026 Zenith Tutorial. All rights reserved.
     </div>
   </div>
 </div>
-
+ 
 <!-- Supabase SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./supabase.js"></script>
 <script>
-  // ── Check if already logged in, redirect to dashboard ──
+  // Initialize Supabase
+  const { createClient } = supabase;
+  const _supabase = createClient(
+    'https://dzcmvgngpfwoueehowub.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6Y212Z25ncGZ3b3VlZWhvd3ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2NDMzOTUsImV4cCI6MjA5MDIxOTM5NX0.ouKaKTLSQOhrHq_9R1RDXD3dvnURtSk8xB4WdXAOn78'
+  );
+ 
+  // Check if already logged in
   (async function() {
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: { session } } = await _supabase.auth.getSession();
     if (session) {
       window.location.href = './main.html';
     }
   })();
-  // ── Login button ──
+ 
+  // Login button
   document.getElementById('login-btn').addEventListener('click', async function () {
     const email    = document.getElementById('login-email').value.trim();
     const password = document.getElementById('login-password').value;
     const errorEl  = document.getElementById('login-error');
     const btn      = document.getElementById('login-btn');
-
+ 
     errorEl.classList.add('hidden');
-
+ 
     if (!email || !password) {
       errorEl.textContent = 'Please enter your email and password.';
       errorEl.classList.remove('hidden');
       return;
     }
-
+ 
     btn.textContent = 'Signing in...';
     btn.disabled = true;
-
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-
+ 
+    const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
+ 
     if (error) {
       errorEl.textContent = 'Invalid email or password. Please try again.';
       errorEl.classList.remove('hidden');
       btn.textContent = 'Sign In to Dashboard';
       btn.disabled = false;
     } else {
-      // Login success — go to dashboard
       window.location.href = './main.html';
     }
   });
-
+ 
   // Allow Enter key
   document.addEventListener('keydown', e => {
     if (e.key === 'Enter') document.getElementById('login-btn').click();
   });
 </script>
-
+ 
 </body>
 </html>
