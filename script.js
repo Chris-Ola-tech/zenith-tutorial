@@ -7,7 +7,7 @@
 (async function authGuard() {
   const { data: { session } } = await supabase.auth.getSession();
 if (!session) {
-  window.location.href = './login.html';
+  window.location.href = 'index.html';
   return;
 }
 document.getElementById('main-app').style.display = 'flex';
@@ -71,7 +71,7 @@ function showSettingsPanel(panel, el) {
 // ── LOGOUT ───────────────────────────────────────────────────
 async function handleLogout() {
   await supabase.auth.signOut();
-  window.location.href = './login.html';
+  window.location.href = 'index.html';
 }
 
 // ============================================================
