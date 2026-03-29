@@ -741,3 +741,40 @@ function formatAmount(num) {
   if (num >= 1_000)     return (num / 1_000).toFixed(0) + 'K';
   return num.toLocaleString();
 }
+
+
+
+// ============================================================
+//  RESET ALL RECORDS
+// ============================================================
+function confirmResetAll() {
+  document.getElementById('reset-confirm-input').value = '';
+  document.getElementById('modal-reset-all').classList.add('open');
+}
+
+async function executeResetAll() {
+  const input = document.getElementById('reset-confirm-input').value.trim();
+
+  if (input !== 'DELETE') {
+    showToast('You must type DELETE to confirm.', 'error');
+    return;
+  }
+
+  showToast('Deleting all records...', 'info');
+
+  // Delete in order: serial_history → payments → students
+  await _supabase.from('serial_history').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+  await _supabase.from('payments').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+  const { error } = await _supabase.from('students').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+
+  if (error) {
+    showToast('Error resetting system: ' + error.message, 'error');
+    return;
+  }
+
+  closeModal('modal-reset-all');
+  showToast('✓ All records have been deleted. System is now empty.', 'success');
+  loadDashboardStats();
+  loadStudentsTable();
+  loadRecentPayments();
+}

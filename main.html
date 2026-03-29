@@ -463,6 +463,14 @@
               </svg>
               Tutorial Info
             </div>
+            <div class="settings-nav-item" onclick="showSettingsPanel('danger', this)">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <polyline points="3 6 5 6 21 6"/>
+    <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
+    <path d="M10 11v6M14 11v6M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/>
+  </svg>
+  Danger Zone
+</div>
             <div class="settings-nav-item" onclick="showSettingsPanel('admin', this)">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
@@ -488,6 +496,20 @@
                 <button class="btn-gold">Save Info</button>
               </div>
             </div>
+            <div id="settings-danger" class="settings-sub-panel hidden">
+  <div class="settings-panel-title" style="color:var(--danger)">⚠ Danger Zone</div>
+  <div class="settings-panel-sub">These actions are permanent and cannot be undone.</div>
+
+  <div style="background:var(--danger-bg);border:1.5px solid rgba(192,57,43,0.25);border-radius:var(--radius-lg);padding:24px;margin-top:8px">
+    <div style="font-size:0.95rem;font-weight:700;color:var(--danger);margin-bottom:6px">Reset Entire System</div>
+    <div style="font-size:0.83rem;color:var(--gray-600);margin-bottom:20px;line-height:1.6">
+      This will permanently delete <strong>every student record</strong>, <strong>every payment</strong>, and <strong>every serial number</strong> from the database. The system will be completely empty after this. This action <strong>cannot be undone</strong>.
+    </div>
+    <button onclick="confirmResetAll()" style="padding:12px 28px;background:var(--danger);color:white;border:none;border-radius:var(--radius);font-size:0.9rem;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(192,57,43,0.35)">
+      🗑️ Delete All Records
+    </button>
+  </div>
+</div>
             <div id="settings-admin" class="settings-sub-panel hidden">
               <div class="settings-panel-title">Admin Account</div>
               <div class="settings-panel-sub">Update your login credentials.</div>
@@ -658,7 +680,45 @@
     </div>
   </div>
 </div>
- 
+ <!-- RESET ALL MODAL -->
+<div class="modal-overlay" id="modal-reset-all">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-header">
+      <div class="modal-title" style="color:var(--danger)">⚠ Reset Entire System</div>
+      <button class="modal-close" onclick="closeModal('modal-reset-all')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div style="text-align:center;padding:10px 0">
+        <div style="width:60px;height:60px;background:var(--danger-bg);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
+            <path d="M10 11v6M14 11v6M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/>
+          </svg>
+        </div>
+        <div style="font-size:1rem;font-weight:700;color:var(--gray-800);margin-bottom:10px">Are you absolutely sure?</div>
+        <div style="font-size:0.83rem;color:var(--gray-400);line-height:1.7;margin-bottom:16px">
+          This will delete <strong style="color:var(--danger)">ALL students</strong>, <strong style="color:var(--danger)">ALL payments</strong>, and <strong style="color:var(--danger)">ALL serial numbers</strong> permanently. There is no way to recover this data.
+        </div>
+        <div style="background:var(--warning-bg);border:1px solid rgba(183,119,13,0.2);border-radius:var(--radius);padding:10px 14px;font-size:0.8rem;color:var(--warning);font-weight:600">
+          Type DELETE below to confirm
+        </div>
+        <input type="text" id="reset-confirm-input" placeholder='Type DELETE here' 
+          style="width:100%;margin-top:12px;padding:10px 14px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:0.9rem;text-align:center;outline:none;font-weight:700;letter-spacing:0.05em">
+      </div>
+    </div>
+    <div class="modal-footer" style="justify-content:center;gap:16px">
+      <button class="btn-ghost" onclick="closeModal('modal-reset-all')">Cancel</button>
+      <button onclick="executeResetAll()" style="padding:10px 24px;background:var(--danger);color:white;border:none;border-radius:var(--radius);font-weight:700;cursor:pointer">
+        Yes, Delete Everything
+      </button>
+    </div>
+  </div>
+</div>
 <div class="toast-container" id="toast-container"></div>
  
 <!-- Supabase SDK — loaded once here -->
