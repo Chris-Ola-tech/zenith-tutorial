@@ -889,7 +889,12 @@
     box-shadow: var(--shadow);
     overflow: hidden;
   }
-  table { width: 100%; border-collapse: collapse; }
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+  table { width: 100%; border-collapse: collapse; min-width: 900px; }
   thead { background: var(--navy); }
   thead th {
     padding: 13px 16px;
