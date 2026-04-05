@@ -12,7 +12,7 @@
  
 <div id="main-app" class="page" style="display:none">
 
-  <!-- MOBILE SIDEBAR OVERLAY (tap to close) -->
+  <!-- MOBILE SIDEBAR OVERLAY -->
   <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
 
   <!-- SIDEBAR -->
@@ -73,6 +73,8 @@
         </svg>
         VIP / Cleared
       </button>
+
+      
  
       <button class="nav-item" onclick="navigateTo('settings', this)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -107,7 +109,6 @@
  
     <!-- TOPBAR -->
     <header class="topbar">
-      <!-- HAMBURGER BUTTON (only visible on mobile) -->
       <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="openSidebar()" aria-label="Open menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <line x1="3" y1="6" x2="21" y2="6"/>
@@ -267,8 +268,8 @@
               <label class="form-label">Course</label>
               <select class="form-input-styled" id="student-class">
                 <option value="">Select course</option>
-                <optgroup label="Primary">
-                  <option>ANATOMY</option><option>CIVIL ENGIEERING</option><option>ANIMAL&ENVIRONMENTAL BIO</option>
+                <optgroup label="Courses">
+                  <option>ANATOMY</option><option>CIVIL ENGIEERING</option><option>ANIMAL&amp;ENVIRONMENTAL BIO</option>
                   <option>HIM</option><option>ELECTRICAL/ELECTRONICS</option><option>PWES</option>
                   <option>EHS</option><option>MECHANICAL ENGINEERING</option><option>LIS</option>
                   <option>M.B.B.S</option><option>BIOCHEMISTRY</option><option>INDUSTRIAL MATHEMATICS</option>
@@ -278,14 +279,13 @@
                   <option>MLS</option><option>CYBERSECURITY</option><option>BREWING SCIENCE AND TECH</option>
                   <option>NUTRITION AND DCT</option><option>GEOLOGY</option><option>FAMILY AND CONSUMER SCIENCE</option>
                   <option>RADIOGRAPHY</option><option>INDUSTRIAL CHEMISTRY</option><option>COMPUTER ENGINEERING</option>
-                  <option>PHARMACOLOGY</option><option>INFORMATION SYSTEM</option><option>software</option>
+                  <option>PHARMACOLOGY</option><option>INFORMATION SYSTEM</option><option>SOFTWARE ENGINEERING</option>
                   <option>GEOGRAPHY</option><option>MATHEMATICS</option><option>MECHATRINICS ENGINEERING</option>
-                  <option>AGRIC ENGINEERING</option><option>MICBROBIOLOGY</option><option>DATA SCIENCE</option>
+                  <option>AGRIC ENGINEERING</option><option>MICROBIOLOGY</option><option>DATA SCIENCE</option>
                   <option>CHEMICAL ENGINEERING</option><option>PLANT BIOLOGY</option><option>BUILDING</option>
                   <option>FOOD SCIENCE AND TECH</option><option>SCIENCE LABORATORY</option>
-                  <option>STATISTICS</option><option>SOFTWARE ENGINEERING</option>
+                  <option>STATISTICS</option>
                 </optgroup>
-                
               </select>
             </div>
             <div class="form-group">
@@ -294,7 +294,7 @@
             </div>
           </div>
  
-          <div class="form-section-title">Fee & Payment Details</div>
+          <div class="form-section-title">Fee &amp; Payment Details</div>
           <div class="form-grid">
             <div class="form-group">
               <label class="form-label">Total Required Fee (₦) *</label>
@@ -367,24 +367,26 @@
           </button>
         </div>
  
-       <div class="table-wrap">
-  <table id="records-table">
+        <div class="table-wrap">
+          <table id="records-table">
             <thead>
               <tr>
                 <th>Photo</th>
                 <th>Student Name</th>
-                <th>Class</th>
+                <th>Course</th>
                 <th>Total Fee</th>
                 <th>Amount Paid</th>
                 <th>Balance</th>
                 <th>Serial No.</th>
                 <th>Status</th>
+                <!-- ★ NEW VIP COLUMN ★ -->
+                <th>VIP</th>
                 <th>Last Payment</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody id="records-tbody">
-              <tr><td colspan="10" style="text-align:center;padding:30px;color:var(--gray-400)">Loading students...</td></tr>
+              <tr><td colspan="11" style="text-align:center;padding:30px;color:var(--gray-400)">Loading students...</td></tr>
             </tbody>
           </table>
           
@@ -428,7 +430,7 @@
       <section id="section-vip" class="section">
         <div class="vip-header">
           <div class="vip-title">VIP Cleared Students</div>
-          <div class="vip-sub">Only students with full payment and active serial numbers appear here.</div>
+          <div class="vip-sub">Students with full payment and active serial numbers. VIP status is managed manually by admin.</div>
           <div class="vip-badge">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
@@ -465,13 +467,13 @@
               Tutorial Info
             </div>
             <div class="settings-nav-item" onclick="showSettingsPanel('danger', this)">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <polyline points="3 6 5 6 21 6"/>
-    <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
-    <path d="M10 11v6M14 11v6M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/>
-  </svg>
-  Danger Zone
-</div>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"/>
+                <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
+                <path d="M10 11v6M14 11v6M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/>
+              </svg>
+              Danger Zone
+            </div>
             <div class="settings-nav-item" onclick="showSettingsPanel('admin', this)">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
@@ -498,19 +500,18 @@
               </div>
             </div>
             <div id="settings-danger" class="settings-sub-panel hidden">
-  <div class="settings-panel-title" style="color:var(--danger)">⚠ Danger Zone</div>
-  <div class="settings-panel-sub">These actions are permanent and cannot be undone.</div>
-
-  <div style="background:var(--danger-bg);border:1.5px solid rgba(192,57,43,0.25);border-radius:var(--radius-lg);padding:24px;margin-top:8px">
-    <div style="font-size:0.95rem;font-weight:700;color:var(--danger);margin-bottom:6px">Reset Entire System</div>
-    <div style="font-size:0.83rem;color:var(--gray-600);margin-bottom:20px;line-height:1.6">
-      This will permanently delete <strong>every student record</strong>, <strong>every payment</strong>, and <strong>every serial number</strong> from the database. The system will be completely empty after this. This action <strong>cannot be undone</strong>.
-    </div>
-    <button onclick="confirmResetAll()" style="padding:12px 28px;background:var(--danger);color:white;border:none;border-radius:var(--radius);font-size:0.9rem;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(192,57,43,0.35)">
-      🗑️ Delete All Records
-    </button>
-  </div>
-</div>
+              <div class="settings-panel-title" style="color:var(--danger)">Danger Zone</div>
+              <div class="settings-panel-sub">These actions are permanent and cannot be undone.</div>
+              <div style="background:var(--danger-bg);border:1.5px solid rgba(192,57,43,0.25);border-radius:var(--radius-lg);padding:24px;margin-top:8px">
+                <div style="font-size:0.95rem;font-weight:700;color:var(--danger);margin-bottom:6px">Reset Entire System</div>
+                <div style="font-size:0.83rem;color:var(--gray-600);margin-bottom:20px;line-height:1.6">
+                  This will permanently delete <strong>every student record</strong>, <strong>every payment</strong>, and <strong>every serial number</strong> from the database. This action <strong>cannot be undone</strong>.
+                </div>
+                <button onclick="confirmResetAll()" style="padding:12px 28px;background:var(--danger);color:white;border:none;border-radius:var(--radius);font-size:0.9rem;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(192,57,43,0.35)">
+                  Delete All Records
+                </button>
+              </div>
+            </div>
             <div id="settings-admin" class="settings-sub-panel hidden">
               <div class="settings-panel-title">Admin Account</div>
               <div class="settings-panel-sub">Update your login credentials.</div>
@@ -552,9 +553,28 @@
         <label class="form-label">Full Name</label>
         <input type="text" class="form-input-styled" id="edit-name">
       </div>
+      <!-- ★ FIXED: uses the same full course list as Add Student ★ -->
       <div class="form-group">
-        <label class="form-label">Class / Grade</label>
-        <select class="form-input-styled" id="edit-class"></select>
+        <label class="form-label">Course</label>
+        <select class="form-input-styled" id="edit-class">
+          <option value="">Select course</option>
+          <option>ANATOMY</option><option>CIVIL ENGIEERING</option><option>ANIMAL&amp;ENVIRONMENTAL BIO</option>
+          <option>HIM</option><option>ELECTRICAL/ELECTRONICS</option><option>PWES</option>
+          <option>EHS</option><option>MECHANICAL ENGINEERING</option><option>LIS</option>
+          <option>M.B.B.S</option><option>BIOCHEMISTRY</option><option>INDUSTRIAL MATHEMATICS</option>
+          <option>NURSING</option><option>BIOTECHNOLOGY</option><option>QUANTITY SURVEY</option>
+          <option>PHYSIOLOGY</option><option>CHEMISTRY</option><option>ARCHITECTURE</option>
+          <option>PUBLIC HEALTH</option><option>COMPUTER SCIENCE</option><option>INFORMATION TECH</option>
+          <option>MLS</option><option>CYBERSECURITY</option><option>BREWING SCIENCE AND TECH</option>
+          <option>NUTRITION AND DCT</option><option>GEOLOGY</option><option>FAMILY AND CONSUMER SCIENCE</option>
+          <option>RADIOGRAPHY</option><option>INDUSTRIAL CHEMISTRY</option><option>COMPUTER ENGINEERING</option>
+          <option>PHARMACOLOGY</option><option>INFORMATION SYSTEM</option><option>SOFTWARE ENGINEERING</option>
+          <option>GEOGRAPHY</option><option>MATHEMATICS</option><option>MECHATRINICS ENGINEERING</option>
+          <option>AGRIC ENGINEERING</option><option>MICROBIOLOGY</option><option>DATA SCIENCE</option>
+          <option>CHEMICAL ENGINEERING</option><option>PLANT BIOLOGY</option><option>BUILDING</option>
+          <option>FOOD SCIENCE AND TECH</option><option>SCIENCE LABORATORY</option>
+          <option>STATISTICS</option>
+        </select>
       </div>
       <div class="form-group">
         <label class="form-label">Total Required Fee (₦)</label>
@@ -669,7 +689,7 @@
     </div>
     <div class="modal-body">
       <div class="security-note" style="border-left-color:var(--danger)">
-        <div class="security-note-title" style="color:var(--danger)">⚠ Warning: Irreversible Action</div>
+        <div class="security-note-title" style="color:var(--danger)">Warning: Irreversible Action</div>
         <div class="security-note-text">
           Serial number <strong id="regen-old-serial"></strong> will be permanently invalidated.
         </div>
@@ -681,11 +701,12 @@
     </div>
   </div>
 </div>
- <!-- RESET ALL MODAL -->
+
+<!-- RESET ALL MODAL -->
 <div class="modal-overlay" id="modal-reset-all">
   <div class="modal" style="max-width:440px">
     <div class="modal-header">
-      <div class="modal-title" style="color:var(--danger)">⚠ Reset Entire System</div>
+      <div class="modal-title" style="color:var(--danger)">Reset Entire System</div>
       <button class="modal-close" onclick="closeModal('modal-reset-all')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
@@ -708,7 +729,7 @@
         <div style="background:var(--warning-bg);border:1px solid rgba(183,119,13,0.2);border-radius:var(--radius);padding:10px 14px;font-size:0.8rem;color:var(--warning);font-weight:600">
           Type DELETE below to confirm
         </div>
-        <input type="text" id="reset-confirm-input" placeholder='Type DELETE here' 
+        <input type="text" id="reset-confirm-input" placeholder="Type DELETE here"
           style="width:100%;margin-top:12px;padding:10px 14px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:0.9rem;text-align:center;outline:none;font-weight:700;letter-spacing:0.05em">
       </div>
     </div>
@@ -720,12 +741,12 @@
     </div>
   </div>
 </div>
+
 <div class="toast-container" id="toast-container"></div>
  
-<!-- Supabase SDK — loaded once here -->
+<!-- Supabase SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  // Initialize Supabase once
   const { createClient } = supabase;
   const _supabase = createClient(
     'https://dzcmvgngpfwoueehowub.supabase.co',

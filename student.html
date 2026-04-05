@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zenith Tutorial — My Record</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="./assets/img/letter-z.png">
+  <style>
+    :root {
+      --navy:       #0F1F3D;
+      --navy-mid:   #1A3260;
+      --navy-light: #243F7A;
+      --gold:       #C9960C;
+      --gold-light: #E8B422;
+      --gold-pale:  #FDF3D8;
+      --white:      #FFFFFF;
+      --off-white:  #F7F8FC;
+      --gray-100:   #EEF0F6;
+      --gray-200:   #D8DCE9;
+      --gray-400:   #8E9AB5;
+      --gray-600:   #5A6680;
+      --gray-800:   #2C3550;
+      --success:    #0C7A4A;
+      --success-bg: #E6F7F0;
+      --danger:     #C0392B;
+      --danger-bg:  #FEF0EE;
+      --warning:    #B7770D;
+      --warning-bg: #FEF9EC;
+      --whatsapp:   #25D366;
+      --whatsapp-dark: #128C7E;
+      --radius:     10px;
+      --radius-lg:  16px;
+      --shadow:     0 2px 12px rgba(15,31,61,0.08);
+      --shadow-lg:  0 8px 32px rgba(15,31,61,0.14);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--off-white);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── TOP HEADER ── */
+    .student-topbar {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 2px 16px rgba(15,31,61,0.2);
+    }
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .topbar-brand-logo {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .topbar-brand-logo svg { width: 18px; height: 18px; }
+    .topbar-brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem; color: var(--white); font-weight: 700;
+    }
+    .btn-logout-top {
+      padding: 7px 16px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.8);
+      border-radius: 8px; font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+      font-family: 'DM Sans', sans-serif;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .btn-logout-top svg { width: 14px; height: 14px; }
+    .btn-logout-top:hover { background: rgba(255,255,255,0.18); color: var(--white); }
+
+    /* ── PAGE CONTENT ── */
+    .student-page {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 28px 20px 60px;
+    }
+
+    /* ── PROFILE HEADER CARD ── */
+    .profile-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 20px;
+    }
+    .profile-banner {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      height: 90px; position: relative;
+    }
+    .profile-banner::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M20 20h20v20H20zM0 0h20v20H0z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .profile-body { padding: 0 24px 24px; }
+    .profile-avatar-wrap {
+      display: flex; align-items: flex-end;
+      justify-content: space-between;
+      margin-top: -36px; margin-bottom: 14px;
+    }
+    .profile-avatar {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--gray-100);
+      border: 4px solid var(--white);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+      overflow: hidden; display: flex;
+      align-items: center; justify-content: center;
+      font-size: 1.4rem; font-weight: 800; color: var(--navy);
+      position: relative; z-index: 1;
+    }
+    .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .profile-status-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 14px; border-radius: 20px;
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .profile-status-badge.paid {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--navy); box-shadow: 0 3px 10px rgba(201,150,12,0.3);
+    }
+    .profile-status-badge.partial {
+      background: var(--warning-bg); color: var(--warning);
+      border: 1px solid rgba(183,119,13,0.25);
+    }
+    .profile-status-badge.vip-temp {
+      background: rgba(26,50,96,0.1); color: var(--navy-light);
+      border: 1px solid rgba(26,50,96,0.2);
+    }
+    .profile-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; color: var(--navy); font-weight: 700; margin-bottom: 3px;
+    }
+    .profile-course { font-size: 0.83rem; color: var(--gray-400); }
+
+    /* ── SERIAL CARD ── */
+    .serial-card {
+      background: var(--white); border-radius: var(--radius-lg);
+      border: 2px solid rgba(201,150,12,0.3);
+      box-shadow: 0 4px 20px rgba(201,150,12,0.12);
+      padding: 22px 24px; margin-bottom: 20px;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 16px;
+    }
+    .serial-card.temp { border-color: rgba(26,50,96,0.2); box-shadow: 0 4px 20px rgba(26,50,96,0.08); }
+    .serial-card.pending { border-color: rgba(183,119,13,0.2); background: var(--warning-bg); box-shadow: none; }
+    .serial-card-label {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 5px;
+    }
+    .serial-card.temp .serial-card-label { color: var(--navy-light); }
+    .serial-card.pending .serial-card-label { color: var(--warning); }
+    .serial-card-number {
+      font-family: 'DM Sans', monospace;
+      font-size: 1.4rem; font-weight: 800;
+      color: var(--navy); letter-spacing: 0.1em;
+    }
+    .serial-card-sub { font-size: 0.75rem; color: var(--gray-400); margin-top: 3px; }
+    .serial-card-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .serial-card-icon.gold { background: var(--gold-pale); color: var(--gold); }
+    .serial-card-icon.navy { background: rgba(26,50,96,0.08); color: var(--navy-light); }
+    .serial-card-icon.warning { background: var(--warning-bg); color: var(--warning); }
+    .serial-card-icon svg { width: 24px; height: 24px; }
+
+    /* ── STAT CARDS ── */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 14px; margin-bottom: 20px;
+    }
+    .mini-stat {
+      background: var(--white); border-radius: var(--radius-lg);
+      border: 1px solid var(--gray-100); box-shadow: var(--shadow);
+      padding: 18px 16px; text-align: center;
+    }
+    .mini-stat-label {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--gray-400); margin-bottom: 8px;
+    }
+    .mini-stat-value { font-size: 1.1rem; font-weight: 800; color: var(--navy); }
+    .mini-stat-value.green { color: var(--success); }
+    .mini-stat-value.red   { color: var(--danger); }
+    .mini-stat-value.gold  { color: var(--gold); }
+
+    /* ── INFO CARD ── */
+    .info-card {
+      background: var(--white); border-radius: var(--radius-lg);
+      border: 1px solid var(--gray-100); box-shadow: var(--shadow);
+      margin-bottom: 20px; overflow: hidden;
+    }
+    .info-card-header {
+      padding: 16px 22px 14px;
+      border-bottom: 1px solid var(--gray-100);
+      font-size: 0.85rem; font-weight: 700; color: var(--navy);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .info-card-header svg { width: 16px; height: 16px; color: var(--gray-400); }
+    .info-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 13px 22px; border-bottom: 1px solid var(--gray-100); font-size: 0.85rem;
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-key { color: var(--gray-400); font-weight: 500; }
+    .info-val { color: var(--gray-800); font-weight: 600; text-align: right; max-width: 60%; }
+
+    /* ── PAYMENT HISTORY ── */
+    .payment-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 15px 22px; border-bottom: 1px solid var(--gray-100); gap: 12px;
+      transition: background 0.15s;
+    }
+    .payment-item:hover { background: var(--off-white); }
+    .payment-item:last-child { border-bottom: none; }
+    .payment-item-icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--success-bg);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .payment-item-icon svg { width: 16px; height: 16px; color: var(--success); }
+    .payment-item-info { flex: 1; }
+    .payment-item-date { font-size: 0.78rem; color: var(--gray-400); margin-bottom: 2px; }
+    .payment-item-method {
+      font-size: 0.83rem; font-weight: 600; color: var(--gray-800);
+    }
+    .payment-item-right { text-align: right; }
+    .payment-item-amount { font-size: 0.95rem; font-weight: 800; color: var(--success); }
+    .payment-item-label { font-size: 0.7rem; color: var(--gray-400); margin-top: 1px; }
+
+    /* ── OUTSTANDING BANNER ── */
+    .outstanding-banner {
+      background: var(--danger-bg);
+      border: 1.5px solid rgba(192,57,43,0.2);
+      border-radius: var(--radius-lg);
+      padding: 18px 22px; margin-bottom: 20px;
+      display: flex; align-items: flex-start; gap: 14px;
+    }
+    .outstanding-banner-icon {
+      width: 36px; height: 36px; background: rgba(192,57,43,0.12);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--danger);
+    }
+    .outstanding-banner-icon svg { width: 18px; height: 18px; }
+    .outstanding-banner-title { font-size: 0.9rem; font-weight: 700; color: var(--danger); margin-bottom: 4px; }
+    .outstanding-banner-sub { font-size: 0.8rem; color: var(--gray-600); line-height: 1.5; }
+
+    /* ── BANK ACCOUNT CARD ── */
+    .bank-card {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1e3a6e 100%);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 28px rgba(15,31,61,0.25);
+    }
+    .bank-card::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+    .bank-card::after {
+      content: '';
+      position: absolute;
+      bottom: -30px; left: 60px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: rgba(201,150,12,0.08);
+    }
+    .bank-card-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 20px;
+    }
+    .bank-card-icon {
+      width: 36px; height: 36px;
+      background: rgba(201,150,12,0.2);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .bank-card-icon svg { width: 18px; height: 18px; color: var(--gold-light); }
+    .bank-card-title { font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.6); letter-spacing: 0.08em; text-transform: uppercase; }
+    .bank-card-sub { font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-top: 1px; }
+    .bank-details-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px; margin-bottom: 20px; position: relative; z-index: 1;
+    }
+    .bank-detail-item { }
+    .bank-detail-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 5px; }
+    .bank-detail-value { font-size: 0.9rem; font-weight: 700; color: var(--white); }
+    .bank-account-number {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 18px; position: relative; z-index: 1;
+    }
+    .bank-account-number-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+    .bank-account-number-val {
+      font-size: 1.3rem; font-weight: 800; color: var(--white);
+      letter-spacing: 0.15em; font-family: monospace;
+    }
+    .copy-btn {
+      background: rgba(201,150,12,0.25); border: 1px solid rgba(201,150,12,0.4);
+      color: var(--gold-light); border-radius: 8px;
+      padding: 8px 14px; font-size: 0.75rem; font-weight: 700;
+      cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .copy-btn svg { width: 13px; height: 13px; }
+    .copy-btn:hover { background: rgba(201,150,12,0.4); }
+    .copy-btn.copied { background: rgba(12,122,74,0.3); border-color: rgba(12,122,74,0.4); color: #4ade80; }
+    .bank-amount-due {
+      background: rgba(192,57,43,0.2); border: 1px solid rgba(192,57,43,0.3);
+      border-radius: var(--radius); padding: 12px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: relative; z-index: 1;
+    }
+    .bank-amount-due-label { font-size: 0.72rem; color: rgba(255,255,255,0.5); font-weight: 600; }
+    .bank-amount-due-val { font-size: 1rem; font-weight: 800; color: #ff8a80; }
+
+    /* ── WHATSAPP BUTTON ── */
+    .whatsapp-section {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--gray-100);
+      box-shadow: var(--shadow);
+      padding: 22px 24px;
+      margin-bottom: 20px;
+    }
+    .whatsapp-section-title {
+      font-size: 0.85rem; font-weight: 700; color: var(--navy);
+      margin-bottom: 6px; display: flex; align-items: center; gap: 8px;
+    }
+    .whatsapp-section-title svg { width: 18px; height: 18px; }
+    .whatsapp-section-sub {
+      font-size: 0.78rem; color: var(--gray-400); line-height: 1.6; margin-bottom: 18px;
+    }
+    .whatsapp-steps {
+      display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;
+    }
+    .whatsapp-step {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 0.8rem; color: var(--gray-600);
+    }
+    .whatsapp-step-num {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: rgba(37,211,102,0.12);
+      color: var(--whatsapp-dark);
+      font-size: 0.7rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .btn-whatsapp {
+      width: 100%; padding: 14px 20px;
+      background: linear-gradient(135deg, var(--whatsapp) 0%, var(--whatsapp-dark) 100%);
+      color: var(--white); border: none; border-radius: var(--radius);
+      font-size: 0.92rem; font-weight: 700;
+      cursor: pointer; transition: all 0.2s;
+      font-family: 'DM Sans', sans-serif;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.3);
+      text-decoration: none;
+    }
+    .btn-whatsapp svg { width: 20px; height: 20px; }
+    .btn-whatsapp:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,211,102,0.4); }
+
+    /* VIP temp banner */
+    .temp-vip-banner {
+      background: rgba(26,50,96,0.05); border: 1.5px solid rgba(26,50,96,0.15);
+      border-radius: var(--radius-lg); padding: 16px 20px; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .temp-vip-banner svg { width: 20px; height: 20px; color: var(--navy-light); flex-shrink: 0; }
+    .temp-vip-banner-text { font-size: 0.82rem; color: var(--gray-600); line-height: 1.5; }
+    .temp-vip-banner-text strong { color: var(--navy); }
+
+    /* Loading state */
+    .loading-state { text-align: center; padding: 60px 20px; color: var(--gray-400); }
+    .loading-spinner {
+      width: 36px; height: 36px;
+      border: 3px solid var(--gray-200); border-top-color: var(--navy);
+      border-radius: 50%; animation: spin 0.8s linear infinite;
+      margin: 0 auto 14px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Empty payment state */
+    .empty-payments {
+      padding: 28px 22px; text-align: center; color: var(--gray-400);
+      font-size: 0.83rem;
+    }
+    .empty-payments svg { width: 32px; height: 32px; margin-bottom: 10px; opacity: 0.4; display: block; margin-left: auto; margin-right: auto; }
+
+    @media (max-width: 480px) {
+      .student-page { padding: 16px 14px 50px; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .profile-name { font-size: 1.1rem; }
+      .serial-card-number { font-size: 1.1rem; }
+      .bank-details-grid { grid-template-columns: 1fr; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="student-topbar">
+  <div class="topbar-brand">
+    <div class="topbar-brand-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M12 2L2 7v5c0 5.55 4.48 10.74 10 12 5.52-1.26 10-6.45 10-12V7l-10-5z"/>
+      </svg>
+    </div>
+    <div class="topbar-brand-name">Zenith Tutorial</div>
+  </div>
+  <button class="btn-logout-top" onclick="handleStudentLogout()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+      <polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+    </svg>
+    Sign Out
+  </button>
+</header>
+
+<!-- MAIN PAGE -->
+<div class="student-page" id="student-page">
+  <div class="loading-state">
+    <div class="loading-spinner"></div>
+    <div>Loading your record...</div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const { createClient } = supabase;
+  const _supabase = createClient(
+    'https://dzcmvgngpfwoueehowub.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6Y212Z25ncGZ3b3VlZWhvd3ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2NDMzOTUsImV4cCI6MjA5MDIxOTM5NX0.ouKaKTLSQOhrHq_9R1RDXD3dvnURtSk8xB4WdXAOn78'
+  );
+
+  // ── BANK DETAILS — update these to match your actual account ──
+  const BANK_INFO = {
+    accountName:   'Zenith Tutorial Centre',
+    accountNumber: '0123456789',       // ← Change this
+    bankName:      'First Bank Nigeria', // ← Change this
+    whatsappNumber: '2348012345678'    // ← Change this (country code + number, no +)
+  };
+
+  const studentId = sessionStorage.getItem('student_id');
+  if (!studentId) window.location.href = './index.html';
+
+  function handleStudentLogout() {
+    sessionStorage.removeItem('student_id');
+    sessionStorage.removeItem('student_name');
+    window.location.href = './index.html';
+  }
+
+  function copyAccountNumber() {
+    navigator.clipboard.writeText(BANK_INFO.accountNumber).then(() => {
+      const btn = document.getElementById('copy-btn');
+      btn.classList.add('copied');
+      btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy`;
+      }, 2500);
+    });
+  }
+
+  // ── LOAD STUDENT DATA ──────────────────────────────────────
+  async function loadStudentRecord() {
+    const { data: s, error } = await _supabase
+      .from('students').select('*').eq('id', studentId).single();
+
+    if (error || !s) {
+      sessionStorage.clear();
+      window.location.href = './index.html';
+      return;
+    }
+
+    // Load ALL payments ordered by date
+    const { data: payments } = await _supabase
+      .from('payments').select('*')
+      .eq('student_id', studentId)
+      .order('payment_date', { ascending: false });
+
+    renderStudentPage(s, payments || []);
+  }
+
+  // ── BUILD WHATSAPP LINK ────────────────────────────────────
+  function buildWhatsAppLink(studentName, balance, amountPaid) {
+    const msg = encodeURIComponent(
+      `Hello Zenith Tutorial Admin 👋\n\n` +
+      `My name is *${studentName}* and I have just made a payment of *₦${Number(amountPaid).toLocaleString()}* towards my outstanding balance of *₦${Number(balance).toLocaleString()}*.\n\n` +
+      `Please find attached the receipt/screenshot of the transfer.\n\n` +
+      `Kindly record my payment. Thank you! 🙏`
+    );
+    return `https://wa.me/${BANK_INFO.whatsappNumber}?text=${msg}`;
+  }
+
+  // ── RENDER PAGE ────────────────────────────────────────────
+  function renderStudentPage(s, payments) {
+    const page      = document.getElementById('student-page');
+    const initials  = s.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+    const photoHtml = s.photo_url
+      ? `<img src="${s.photo_url}" alt="${s.name}">`
+      : initials;
+
+    const isFullyPaid = s.status === 'paid';
+    const isTempVip   = s.is_vip && s.vip_type === 'temp';
+    const isOwing     = s.balance > 0;
+
+    // Status badge
+    let badgeHtml = '';
+    if (isFullyPaid) {
+      badgeHtml = `<span class="profile-status-badge paid">⭐ Fully Paid & Cleared</span>`;
+    } else if (isTempVip) {
+      badgeHtml = `<span class="profile-status-badge vip-temp">🔷 Temp VIP Access</span>`;
+    } else {
+      badgeHtml = `<span class="profile-status-badge partial">⏳ Awaiting Full Payment</span>`;
+    }
+
+    // Serial card
+    let serialHtml = '';
+    if (isFullyPaid && s.serial) {
+      serialHtml = `
+        <div class="serial-card">
+          <div>
+            <div class="serial-card-label">Clearance Serial Number</div>
+            <div class="serial-card-number">${s.serial}</div>
+            <div class="serial-card-sub">Permanent · Generated on full payment</div>
+          </div>
+          <div class="serial-card-icon gold">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+        </div>`;
+    } else if (isTempVip && s.temp_serial) {
+      serialHtml = `
+        <div class="serial-card temp">
+          <div>
+            <div class="serial-card-label">Temporary Access Serial</div>
+            <div class="serial-card-number">${s.temp_serial}</div>
+            <div class="serial-card-sub">Temporary · Granted by admin · Can be revoked</div>
+          </div>
+          <div class="serial-card-icon navy">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+        </div>`;
+    } else {
+      serialHtml = `
+        <div class="serial-card pending">
+          <div>
+            <div class="serial-card-label">Clearance Serial Number</div>
+            <div class="serial-card-number" style="font-size:1rem;color:var(--warning)">Not Yet Issued</div>
+            <div class="serial-card-sub">Complete your payment to receive a serial number</div>
+          </div>
+          <div class="serial-card-icon warning">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+          </div>
+        </div>`;
+    }
+
+    // Outstanding banner
+    const outstandingHtml = isOwing ? `
+      <div class="outstanding-banner">
+        <div class="outstanding-banner-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+        <div>
+          <div class="outstanding-banner-title">Outstanding Balance: ₦${s.balance.toLocaleString()}</div>
+          <div class="outstanding-banner-sub">
+            You have an unpaid balance. Use the account details below to make your payment, 
+            then send your receipt via WhatsApp so admin can record it.
+          </div>
+        </div>
+      </div>` : '';
+
+    // Bank account card — only for owing students
+    const bankCardHtml = isOwing ? `
+      <div class="bank-card">
+        <div class="bank-card-header">
+          <div class="bank-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+              <line x1="1" y1="10" x2="23" y2="10"/>
+            </svg>
+          </div>
+          <div>
+            <div class="bank-card-title">Payment Account Details</div>
+            <div class="bank-card-sub">Transfer your balance to this account</div>
+          </div>
+        </div>
+
+        <div class="bank-details-grid">
+          <div class="bank-detail-item">
+            <div class="bank-detail-label">Account Name</div>
+            <div class="bank-detail-value">${BANK_INFO.accountName}</div>
+          </div>
+          <div class="bank-detail-item">
+            <div class="bank-detail-label">Bank Name</div>
+            <div class="bank-detail-value">${BANK_INFO.bankName}</div>
+          </div>
+        </div>
+
+        <div class="bank-account-number">
+          <div>
+            <div class="bank-account-number-label">Account Number</div>
+            <div class="bank-account-number-val">${BANK_INFO.accountNumber}</div>
+          </div>
+          <button class="copy-btn" id="copy-btn" onclick="copyAccountNumber()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2"/>
+              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+
+        <div class="bank-amount-due">
+          <div class="bank-amount-due-label">Amount You Owe</div>
+          <div class="bank-amount-due-val">₦${s.balance.toLocaleString()}</div>
+        </div>
+      </div>
+
+      <!-- WhatsApp Receipt Section -->
+      <div class="whatsapp-section">
+        <div class="whatsapp-section-title">
+          <svg viewBox="0 0 24 24" fill="#25D366">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Send Receipt via WhatsApp
+        </div>
+        <div class="whatsapp-section-sub">
+          After making your transfer, click the button below to notify the admin on WhatsApp with your receipt.
+        </div>
+        <div class="whatsapp-steps">
+          <div class="whatsapp-step">
+            <div class="whatsapp-step-num">1</div>
+            <div>Make your bank transfer using the account details above</div>
+          </div>
+          <div class="whatsapp-step">
+            <div class="whatsapp-step-num">2</div>
+            <div>Take a screenshot or save your payment receipt</div>
+          </div>
+          <div class="whatsapp-step">
+            <div class="whatsapp-step-num">3</div>
+            <div>Click the button below — your message will be pre-filled. Attach your receipt photo and send</div>
+          </div>
+        </div>
+        <a class="btn-whatsapp" href="${buildWhatsAppLink(s.name, s.balance, s.balance)}" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="white">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Notify Admin on WhatsApp
+        </a>
+      </div>` : '';
+
+    // Temp VIP notice
+    const tempVipHtml = isTempVip ? `
+      <div class="temp-vip-banner">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <div class="temp-vip-banner-text">
+          <strong>Temporary VIP Access</strong> — Your VIP status was manually granted by the admin.
+          This access can be revoked at any time. Complete your full payment for a permanent serial number.
+        </div>
+      </div>` : '';
+
+    // ── PAYMENT HISTORY ─────────────────────────────────────
+    let paymentHistoryHtml = '';
+    if (payments.length === 0) {
+      paymentHistoryHtml = `
+        <div class="empty-payments">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+            <line x1="1" y1="10" x2="23" y2="10"/>
+          </svg>
+          No payment records found.
+        </div>`;
+    } else {
+      let totalPaid = 0;
+      paymentHistoryHtml = payments.map(p => {
+        totalPaid += p.amount;
+
+        // Use payment_date first, fall back to created_at
+        const rawDate = p.payment_date || p.created_at;
+        const dateObj = new Date(rawDate);
+        const dateStr = dateObj.toLocaleDateString('en-GB', {
+          weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
+        });
+        // Also show time if it came from created_at (has time component)
+        const timeStr = p.created_at
+          ? new Date(p.created_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+          : '';
+
+        return `
+          <div class="payment-item">
+            <div class="payment-item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <div class="payment-item-info">
+              <div class="payment-item-date">${dateStr}${timeStr ? ' · ' + timeStr : ''}</div>
+              <div class="payment-item-method">${p.method || 'Payment'}</div>
+            </div>
+            <div class="payment-item-right">
+              <div class="payment-item-amount">+₦${p.amount.toLocaleString()}</div>
+              <div class="payment-item-label">Recorded</div>
+            </div>
+          </div>`;
+      }).join('');
+
+      // Append summary row
+      paymentHistoryHtml += `
+        <div style="padding:14px 22px;background:var(--off-white);display:flex;justify-content:space-between;align-items:center;font-size:0.8rem;border-top:1px solid var(--gray-100)">
+          <span style="color:var(--gray-400);font-weight:600">${payments.length} payment${payments.length !== 1 ? 's' : ''} total</span>
+          <span style="color:var(--success);font-weight:800">Total: ₦${totalPaid.toLocaleString()}</span>
+        </div>`;
+    }
+
+    const firstPayDate = s.first_payment_date
+      ? new Date(s.first_payment_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+      : '—';
+
+    page.innerHTML = `
+      ${outstandingHtml}
+      ${tempVipHtml}
+
+      <!-- Profile Card -->
+      <div class="profile-card">
+        <div class="profile-banner"></div>
+        <div class="profile-body">
+          <div class="profile-avatar-wrap">
+            <div class="profile-avatar">${photoHtml}</div>
+            ${badgeHtml}
+          </div>
+          <div class="profile-name">${s.name}</div>
+          <div class="profile-course">${s.class || '—'}</div>
+        </div>
+      </div>
+
+      <!-- Serial Card -->
+      ${serialHtml}
+
+      <!-- Fee Stats -->
+      <div class="stats-row">
+        <div class="mini-stat">
+          <div class="mini-stat-label">Total Fee</div>
+          <div class="mini-stat-value">₦${formatAmount(s.total_fee || 0)}</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-label">Amount Paid</div>
+          <div class="mini-stat-value green">₦${formatAmount(s.amount_paid || 0)}</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-label">Balance</div>
+          <div class="mini-stat-value ${s.balance > 0 ? 'red' : 'green'}">
+            ₦${formatAmount(s.balance || 0)}
+          </div>
+        </div>
+      </div>
+
+      <!-- Bank Account Details (only if owing) -->
+      ${bankCardHtml}
+
+      <!-- Payment Details -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+            <line x1="1" y1="10" x2="23" y2="10"/>
+          </svg>
+          Payment Details
+        </div>
+        <div class="info-row">
+          <span class="info-key">Payment Status</span>
+          <span class="info-val" style="color:${isFullyPaid ? 'var(--success)' : 'var(--warning)'}">
+            ${isFullyPaid ? '✓ Fully Paid' : 'Partial Payment'}
+          </span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Payment Method</span>
+          <span class="info-val">${s.payment_method || '—'}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">First Payment Date</span>
+          <span class="info-val">${firstPayDate}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">VIP Status</span>
+          <span class="info-val" style="color:${s.is_vip ? 'var(--gold)' : 'var(--gray-400)'}">
+            ${isFullyPaid ? '⭐ Permanent VIP' : (isTempVip ? '🔷 Temporary VIP' : 'Not VIP')}
+          </span>
+        </div>
+        ${s.notes ? `
+        <div class="info-row">
+          <span class="info-key">Remarks</span>
+          <span class="info-val">${s.notes}</span>
+        </div>` : ''}
+      </div>
+
+      <!-- Payment History -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+          Payment History
+        </div>
+        ${paymentHistoryHtml}
+      </div>
+    `;
+  }
+
+  function formatAmount(num) {
+    if (num >= 1_000_000) return (num / 1_000_000).toFixed(1) + 'M';
+    if (num >= 1_000)     return (num / 1_000).toFixed(0) + 'K';
+    return num.toLocaleString();
+  }
+
+  loadStudentRecord();
+</script>
+
+</body>
+</html>

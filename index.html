@@ -3,117 +3,358 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zenith Tutorial — Fee Management System</title>
+  <title>Zenith Tutorial — Login</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
   <link rel="icon" type="image/x-icon" href="./assets/img/letter-z.png">
+  <style>
+    /* ── ROLE SWITCHER ── */
+    .role-switcher {
+      display: flex;
+      background: var(--gray-100);
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 28px;
+      gap: 4px;
+    }
+    .role-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.22s ease;
+      background: transparent;
+      color: var(--gray-400);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .role-btn svg { width: 16px; height: 16px; }
+    .role-btn.active {
+      background: var(--white);
+      color: var(--navy);
+      box-shadow: 0 2px 8px rgba(15,31,61,0.12);
+    }
+    .role-btn.active.admin { color: var(--navy); }
+    .role-btn.active.student { color: var(--success); }
+
+    /* Role panels */
+    .role-panel { display: none; }
+    .role-panel.active { display: block; }
+
+    /* Student ID input hint */
+    .student-hint {
+      font-size: 0.75rem;
+      color: var(--gray-400);
+      margin-top: 5px;
+      line-height: 1.5;
+    }
+
+    /* PIN input */
+    .pin-input {
+      width: 100%;
+      padding: 11px 14px 11px 40px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      color: var(--navy);
+      background: var(--off-white);
+      transition: var(--transition);
+      outline: none;
+      text-align: center;
+    }
+    .pin-input:focus {
+      border-color: var(--success);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(12,122,74,0.1);
+    }
+
+    .btn-student {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, var(--success) 0%, #16a363 100%);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      transition: var(--transition);
+      box-shadow: 0 4px 16px rgba(12,122,74,0.3);
+      margin-top: 6px;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .btn-student:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(12,122,74,0.36); }
+    .btn-student:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* Divider */
+    .or-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+      color: var(--gray-400);
+      font-size: 0.75rem;
+    }
+    .or-divider::before, .or-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--gray-200);
+    }
+
+    /* Student info box */
+    .student-info-box {
+      background: rgba(12,122,74,0.05);
+      border: 1px solid rgba(12,122,74,0.15);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      margin-bottom: 20px;
+      font-size: 0.8rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+    }
+    .student-info-box strong { color: var(--success); }
+  </style>
 </head>
 <body>
- 
+
 <div id="login-page" class="page active">
-  <div class="login-card">
+  <div class="login-card" style="width:440px; max-width:100%">
+
+    <!-- Logo -->
     <div class="login-logo">
       <div class="logo-mark">
         <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M19 4L4 12v6c0 9.4 6.4 18.2 15 20.5C28.6 36.2 35 27.4 35 18v-6L19 4z" fill="rgba(255,255,255,0.15)" stroke="white" stroke-width="1.5"/>
-          <path d="M13 19h12M19 13v12M16 16l6 6M22 16l-6 6" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M19 4L4 12v6c0 9.4 6.4 18.2 15 20.5C28.6 36.2 35 27.4 35 18v-6L19 4z"
+            fill="rgba(255,255,255,0.15)" stroke="white" stroke-width="1.5"/>
+          <path d="M13 19h12M19 13v12M16 16l6 6M22 16l-6 6"
+            stroke="white" stroke-width="1.8" stroke-linecap="round"/>
         </svg>
       </div>
       <div class="logo-school-name">Zenith Tutorial</div>
       <div class="logo-tagline">Fee Record Management System</div>
     </div>
- 
-    <div class="login-title">Administrator Sign In</div>
-    <div class="login-subtitle">Access is restricted to authorized personnel only.</div>
- 
+
+    <!-- Role switcher -->
+    <div class="role-switcher">
+      <button class="role-btn admin active" id="btn-admin-role" onclick="switchRole('admin')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        Admin Login
+      </button>
+      <button class="role-btn student" id="btn-student-role" onclick="switchRole('student')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        Student Login
+      </button>
+    </div>
+
+    <!-- Error message -->
     <div id="login-error" class="error-msg hidden">
-      Invalid email or password. Please try again.
+      Invalid credentials. Please try again.
     </div>
- 
-    <div class="form-group">
-      <label class="form-label">Email Address</label>
-      <div class="input-with-icon">
-        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2z"/>
-          <path d="M22 6l-10 7L2 6"/>
-        </svg>
-        <input type="email" class="form-input" id="login-email" placeholder="admin@tutorial.edu" autocomplete="email">
+
+    <!-- ── ADMIN PANEL ── -->
+    <div class="role-panel active" id="panel-admin">
+      <div class="login-title">Administrator Sign In</div>
+      <div class="login-subtitle" style="margin-bottom:20px">Access is restricted to authorized personnel only.</div>
+
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <div class="input-with-icon">
+          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2z"/>
+            <path d="M22 6l-10 7L2 6"/>
+          </svg>
+          <input type="email" class="form-input" id="login-email"
+            placeholder="admin@tutorial.edu" autocomplete="email">
+        </div>
       </div>
-    </div>
- 
-    <div class="form-group">
-      <label class="form-label">Password</label>
-      <div class="input-with-icon">
-        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-          <path d="M7 11V7a5 5 0 0110 0v4"/>
-        </svg>
-        <input type="password" class="form-input" id="login-password" placeholder="••••••••" autocomplete="current-password">
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="input-with-icon">
+          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0110 0v4"/>
+          </svg>
+          <input type="password" class="form-input" id="login-password"
+            placeholder="••••••••" autocomplete="current-password">
+        </div>
       </div>
+
+      <button class="btn-primary" id="login-btn" onclick="handleAdminLogin()">
+        Sign In to Dashboard
+      </button>
     </div>
- 
-    <button class="btn-primary" id="login-btn">Sign In to Dashboard</button>
- 
-    <div class="login-footer">
+
+    <!-- ── STUDENT PANEL ── -->
+    <div class="role-panel" id="panel-student">
+      <div class="login-title" style="color:var(--success)">Student Sign In</div>
+      <div class="login-subtitle" style="margin-bottom:20px">View your fee status and payment record.</div>
+
+      <div class="student-info-box">
+        Your <strong>Student ID</strong> and <strong>PIN</strong> were given to you when you registered.
+        Contact admin if you've forgotten them.
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <div class="input-with-icon">
+          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <input type="text" class="form-input" id="student-name-input"
+            placeholder="Enter your full name" autocomplete="name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">4-Digit PIN</label>
+        <div class="input-with-icon">
+          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0110 0v4"/>
+          </svg>
+          <input type="password" class="pin-input" id="student-pin-input"
+            placeholder="••••" maxlength="4" autocomplete="off"
+            style="padding-left:40px;letter-spacing:0.3em">
+        </div>
+        <div class="student-hint">Enter the 4-digit PIN given to you by your admin.</div>
+      </div>
+
+      <button class="btn-student" id="student-login-btn" onclick="handleStudentLogin()">
+        View My Record
+      </button>
+    </div>
+
+    <div class="login-footer" style="margin-top:24px">
       EduLedger v2.1 &nbsp;·&nbsp; Secured by Supabase<br>
-      &copy; 2026 Zenith Tutorial.By Olawale All rights reserved.
+      &copy; 2026 Zenith Tutorial. By Olawale. All rights reserved.
     </div>
   </div>
 </div>
- 
-<!-- Supabase SDK -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  // Initialize Supabase
   const { createClient } = supabase;
   const _supabase = createClient(
     'https://dzcmvgngpfwoueehowub.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6Y212Z25ncGZ3b3VlZWhvd3ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2NDMzOTUsImV4cCI6MjA5MDIxOTM5NX0.ouKaKTLSQOhrHq_9R1RDXD3dvnURtSk8xB4WdXAOn78'
   );
- 
-  // Check if already logged in
+
+  // Check if admin already logged in
   (async function() {
     const { data: { session } } = await _supabase.auth.getSession();
-    if (session) {
-      window.location.href = './main.html';
-    }
+    if (session) window.location.href = './main.html';
   })();
- 
-  // Login button
-  document.getElementById('login-btn').addEventListener('click', async function () {
+
+  // ── ROLE SWITCHER ──────────────────────────────────────────
+  function switchRole(role) {
+    document.getElementById('panel-admin').classList.toggle('active', role === 'admin');
+    document.getElementById('panel-student').classList.toggle('active', role === 'student');
+    document.getElementById('btn-admin-role').classList.toggle('active', role === 'admin');
+    document.getElementById('btn-student-role').classList.toggle('active', role === 'student');
+    document.getElementById('login-error').classList.add('hidden');
+  }
+
+  // ── ADMIN LOGIN ────────────────────────────────────────────
+  async function handleAdminLogin() {
     const email    = document.getElementById('login-email').value.trim();
     const password = document.getElementById('login-password').value;
     const errorEl  = document.getElementById('login-error');
     const btn      = document.getElementById('login-btn');
- 
+
     errorEl.classList.add('hidden');
- 
     if (!email || !password) {
       errorEl.textContent = 'Please enter your email and password.';
       errorEl.classList.remove('hidden');
       return;
     }
- 
+
     btn.textContent = 'Signing in...';
-    btn.disabled = true;
- 
-    const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
- 
+    btn.disabled    = true;
+
+    const { error } = await _supabase.auth.signInWithPassword({ email, password });
+
     if (error) {
       errorEl.textContent = 'Invalid email or password. Please try again.';
       errorEl.classList.remove('hidden');
       btn.textContent = 'Sign In to Dashboard';
-      btn.disabled = false;
+      btn.disabled    = false;
     } else {
       window.location.href = './main.html';
     }
-  });
- 
-  // Allow Enter key
+  }
+
+  // ── STUDENT LOGIN ──────────────────────────────────────────
+  async function handleStudentLogin() {
+    const name    = document.getElementById('student-name-input').value.trim();
+    const pin     = document.getElementById('student-pin-input').value.trim();
+    const errorEl = document.getElementById('login-error');
+    const btn     = document.getElementById('student-login-btn');
+
+    errorEl.classList.add('hidden');
+
+    if (!name || !pin) {
+      errorEl.textContent = 'Please enter your full name and PIN.';
+      errorEl.classList.remove('hidden');
+      return;
+    }
+
+    if (pin.length !== 4 || isNaN(pin)) {
+      errorEl.textContent = 'PIN must be exactly 4 digits.';
+      errorEl.classList.remove('hidden');
+      return;
+    }
+
+    btn.textContent = 'Looking up...';
+    btn.disabled    = true;
+
+    // Search by name (case-insensitive) and PIN
+    const { data, error } = await _supabase
+      .from('students')
+      .select('*')
+      .ilike('name', name)
+      .eq('student_pin', pin)
+      .maybeSingle();
+
+    btn.textContent = 'View My Record';
+    btn.disabled    = false;
+
+    if (error || !data) {
+      errorEl.textContent = 'No record found. Check your name and PIN and try again.';
+      errorEl.classList.remove('hidden');
+      return;
+    }
+
+    // Save student ID to sessionStorage and go to student dashboard
+    sessionStorage.setItem('student_id', data.id);
+    sessionStorage.setItem('student_name', data.name);
+    window.location.href = './student.html';
+  }
+
+  // ── ENTER KEY ──────────────────────────────────────────────
   document.addEventListener('keydown', e => {
-    if (e.key === 'Enter') document.getElementById('login-btn').click();
+    if (e.key !== 'Enter') return;
+    const adminActive = document.getElementById('panel-admin').classList.contains('active');
+    if (adminActive) handleAdminLogin();
+    else handleStudentLogin();
   });
 </script>
- 
+
 </body>
 </html>
